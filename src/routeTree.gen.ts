@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as EmailRouteImport } from './routes/email'
+import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SummarizerRouteImport } from './routes/summarizer'
 import { Route as ApiAiRouteImport } from './routes/api/ai'
@@ -29,6 +30,11 @@ const AssistantRoute = AssistantRouteImport.update({
 const EmailRoute = EmailRouteImport.update({
   id: '/email',
   path: '/email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResponsibleAiRoute = ResponsibleAiRouteImport.update({
+  id: '/responsible-ai',
+  path: '/responsible-ai',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assistant': typeof AssistantRoute
   '/email': typeof EmailRoute
+  '/responsible-ai': typeof ResponsibleAiRoute
   '/settings': typeof SettingsRoute
   '/summarizer': typeof SummarizerRoute
   '/api/ai': typeof ApiAiRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assistant': typeof AssistantRoute
   '/email': typeof EmailRoute
+  '/responsible-ai': typeof ResponsibleAiRoute
   '/settings': typeof SettingsRoute
   '/summarizer': typeof SummarizerRoute
   '/api/ai': typeof ApiAiRoute
@@ -68,6 +76,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/assistant': typeof AssistantRoute
   '/email': typeof EmailRoute
+  '/responsible-ai': typeof ResponsibleAiRoute
   '/settings': typeof SettingsRoute
   '/summarizer': typeof SummarizerRoute
   '/api/ai': typeof ApiAiRoute
@@ -75,14 +84,28 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/assistant' | '/email' | '/settings' | '/summarizer' | '/api/ai'
+    | '/'
+    | '/assistant'
+    | '/email'
+    | '/responsible-ai'
+    | '/settings'
+    | '/summarizer'
+    | '/api/ai'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/assistant' | '/email' | '/settings' | '/summarizer' | '/api/ai'
+  to:
+    | '/'
+    | '/assistant'
+    | '/email'
+    | '/responsible-ai'
+    | '/settings'
+    | '/summarizer'
+    | '/api/ai'
   id:
     | '__root__'
     | '/'
     | '/assistant'
     | '/email'
+    | '/responsible-ai'
     | '/settings'
     | '/summarizer'
     | '/api/ai'
@@ -92,6 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AssistantRoute: typeof AssistantRoute
   EmailRoute: typeof EmailRoute
+  ResponsibleAiRoute: typeof ResponsibleAiRoute
   SettingsRoute: typeof SettingsRoute
   SummarizerRoute: typeof SummarizerRoute
   ApiAiRoute: typeof ApiAiRoute
@@ -118,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/email'
       fullPath: '/email'
       preLoaderRoute: typeof EmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/responsible-ai': {
+      id: '/responsible-ai'
+      path: '/responsible-ai'
+      fullPath: '/responsible-ai'
+      preLoaderRoute: typeof ResponsibleAiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -148,6 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AssistantRoute: AssistantRoute,
   EmailRoute: EmailRoute,
+  ResponsibleAiRoute: ResponsibleAiRoute,
   SettingsRoute: SettingsRoute,
   SummarizerRoute: SummarizerRoute,
   ApiAiRoute: ApiAiRoute,
