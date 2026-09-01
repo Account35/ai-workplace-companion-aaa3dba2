@@ -17,7 +17,7 @@ export async function streamAi(
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
-    signal,
+    signal: signal ?? null,
   });
 
   if (!response.ok || !response.body) {
